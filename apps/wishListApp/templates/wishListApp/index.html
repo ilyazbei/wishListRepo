@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width = device-width, initial scale = 1">
+		<title>My Wish List</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		{% load staticfiles %}
+    {% load humanize %}
+		<link rel="stylesheet" href="{% static 'loginApp/css/styles.css' %}">
+	</head>
+	<body>
+    <div class="container">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-9">
+            <h2>Hello, {{ request.session.user_name }}!</h2>
+            <div class="errorMessage">
+              {% if messages %}
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <form class="" action="{% url 'users:logout' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Logout">
+            </form>
+          </div>
+          <div class="col-md-7">
+            <table class="table table-striped table-bordered">
+              <thead>
+                Your Wish List:
+                <tr>
+                  <th>Item</th>
+                  <th>Added by</th>
+                  <th>Date Added</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in wishList %}
+                <tr>
+                  <td><a href="{% url 'wishList:show' id=item.id %}">{{ item.wish }}</a></td>
+                  <td>{{ item.creator.name }}</td>
+                  <td>{{ item.created_at }}</td>
+                  <td>
+                    {% if item.creator.id == request.session.user_id %}
+                      <form class="" action="{% url 'wishList:delete' id=item.id %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" type="submit" name="" value ="Delete">
+                      </form>
+                    {% else %}
+                      <form class="" action="{% url 'wishList:remove' id=item.id %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-warning" type="submit" name="" value ="Remove from my Wishlist">
+                      </form>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div> <!-- col-md-7 ends here -->
+          <div class="col-md-7">
+            <table class="table table-striped table-bordered">
+              <thead>
+                Other Users' Wish List:
+                <tr>
+                  <th>Item</th>
+                  <th>Added by</th>
+                  <th>Date Added</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in othersWishlist %}
+                <tr>
+                  <td><a href="{% url 'wishList:show' id=item.id %}">{{ item.wish }}</a></td>
+                  <td>{{ item.creator.name }}</td>
+                  <td>{{ item.created_at }}</td>
+                  <td>
+                    <form class="" action="{% url 'wishList:add' id=item.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="wish_id" value="{{ item.id }}">
+                      <input class="btn btn-success" type="submit" name="" value ="Add to my wishlist">
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div> <!-- col-md-7 ends here -->
+          <div class="col-md-9"></div>
+          <div class="col-md-3">
+            <a href="{% url 'wishList:create' %}">Add Item</a>
+          </div>
+        </div> <!-- Row ends here -->
+      </div> <!-- Well ends here -->
+    </div> <!-- Container ends here -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
+<!-- //////////////////// -->

@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width = device-width, initial scale = 1">
+		<title>Success Page</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'validateApp/css/styles.css' %}">
+	</head>
+	<body>
+    <div class="container">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-7">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email Adresses</th>
+                  <th>Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ request.session.first_name }}</td>
+                  <td>{{ request.session.last_name }}</td>
+                  <td>{{ request.session.email }}</td>
+                  <td>{{ request.session.user_id }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <form class="" action="{% url 'users:logout' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Logout">
+            </form>
+            <a href="{% url 'users:show' user_id=1 %}">Go to show page</a>
+          </div> <!-- col-md-7 ends here -->
+        </div> <!-- Row ends here -->
+      </div> <!-- Well ends here -->
+    </div> <!-- Container ends here -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>

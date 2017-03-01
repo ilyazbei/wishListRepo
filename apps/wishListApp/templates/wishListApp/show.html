@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width = device-width, initial scale = 1">
+		<title>{{ itemInfo.wish }}</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		{% load staticfiles %}
+    {% load humanize %}
+		<link rel="stylesheet" href="{% static 'wishListApp/css/styles.css' %}">
+	</head>
+	<body>
+    <div class="container">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-9">
+            <h2>{{ itemInfo.wish }}</h2>
+          </div>
+          <div class="col-md-1">
+            <form class="" action="{% url 'wishList:index' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Home">
+            </form>
+          </div>
+          <div class="col-md-1">
+            <form class="" action="{% url 'users:logout' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Logout">
+            </form>
+          </div>
+          <div class="col-md-6">
+            <h5>Users who added this produc/item under their wish list:</h5>
+            {% for user in otherUsersList %}
+              <p>{{ user.name }}</p>
+            {% endfor %}
+          </div>
+        </div> <!-- Row ends here -->
+      </div> <!-- Well ends here -->
+    </div> <!-- Container ends here -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>

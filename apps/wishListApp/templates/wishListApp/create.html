@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width = device-width, initial scale = 1">
+		<title>Create Item</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		{% load staticfiles %}
+    {% load humanize %}
+		<link rel="stylesheet" href="{% static 'wishListApp/css/styles.css' %}">
+	</head>
+	<body>
+    <div class="container">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-9">
+            <h2>Create a New Wish List Item</h2>
+          </div>
+          <div class="col-md-1">
+            <form class="" action="{% url 'wishList:index' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Home">
+            </form>
+          </div>
+          <div class="col-md-1">
+            <form class="" action="{% url 'users:logout' %}" method="post">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" name="submit" value="Logout">
+            </form>
+          </div>
+          <div class="col-md-7">
+            <form class="form-horizontal" action="{% url 'wishList:newItem' %}" method="POST">
+              {% csrf_token %}
+              <div class="control-group">
+                <!-- Content -->
+                <label class="control-label"  for="wish">Item/Product: </label>
+                <div class="controls">
+                  <input type="text" id="wish" name="wish" placeholder="" class="input-xlarge">
+                </div><br>
+                <div class="control-group">
+                  <!-- Button -->
+                  <div class="controls col-md-offset-2">
+                    <button class="btn btn-primary">Add</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div> <!-- col-md-7 ends here -->
+        </div> <!-- Row ends here -->
+      </div> <!-- Well ends here -->
+    </div> <!-- Container ends here -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
